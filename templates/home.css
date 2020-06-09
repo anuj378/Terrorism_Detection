@@ -1,0 +1,35 @@
+
+
+input[type="text"]
+{
+	margin-top:80px;
+	border: 2px solid blue;
+	margin-left: 450px;
+	margin-right: 50px;
+	width: 400px;
+	height: 100px;
+}
+
+body
+{
+	background-repeat: no-repeat;
+   background-size: cover;
+}
+h1{
+	padding-top: 25px;
+    padding-bottom: 25px;
+    background:  rgb(0,0,0);
+	font-family:Rockwell;
+	color: rgba(255,255,255,1); 
+	font-size: 30px;
+	border-bottom: 3px solid red;
+	border-color:black;
+
+
+}
+
+
+
+li{
+	color: grey;
+}

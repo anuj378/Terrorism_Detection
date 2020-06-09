@@ -115,11 +115,11 @@ def showAnalysis():
         x = x+1
     
     text = (request.form['textbox'])
-    '''
-    FOR TESTING THE RECEIVED DATA, WE STORED IT IN A FILE'''
-    file = open('new.txt', mode='wt')
-    file.write(str(text))
-    file.close()
+    # '''
+    # FOR TESTING THE RECEIVED DATA, WE STORED IT IN A FILE'''
+    # file = open('new.txt', mode='wt')
+    # file.write(str(text))
+    # file.close()
     phrase = re.sub('[^a-zA-Z]', ' ', text)
     phrase = phrase.lower()
     phrase = phrase.split()
