@@ -1,0 +1,171 @@
+{% extends 'layout.html' %}
+
+
+{% block body %}
+<style type="text/css">
+	.buttons_under_canvas1 {
+		margin-left: 91px;
+		margin-top: 10px;
+	}
+
+	.canvas2 {
+		margin-left: 450px;
+		margin-top: 90px;
+		
+	}
+	.canvases{
+		margin-top: 10px;
+	}
+	input[type="text"]
+{
+
+	border: 2px solid blue;
+	margin-left: 0px;
+	margin-right: 0px;
+	margin-bottom: 50px;
+	width: 500px;
+	height: 200px;
+}
+.buttons_under_leftblock{
+	margin-top: 17px;
+}
+.leftblock{
+	margin-left: 70px;
+	margin-top: 70px;
+
+}
+
+</style>
+
+
+<body>
+    <br><br><br><br>
+ 	<div class="jumbotron text-center">
+ 		<h3>Image Analyzer</h3>
+ 		<br><h7>This page lets you select an image and analyzes it. The analyzed result will be shown in the output window in the right.<br>Select an image and click on <b>"ANALYZE"</b></h7>.
+ 	</div>
+ 	        <div class="container">
+	 		<div class="row canvases">
+
+
+	 			<div class="col-md-3 leftblock">
+
+<form action="/images/analyzeImage" method="post"  enctype="multipart/form-data">
+	<input id="imageUpload" type="file" name="file">
+	<input id="analyzeButton" name="text" type="submit" class="btn btn-success buttons_under_leftblock" value="Analyze">
+	<button type="reset" class="btn btn-danger buttons_under_leftblock" value="Reset">Reset</button>
+
+</form>
+<!--					<div class ="image-upload-wrap">
+						<input class="file-upload-input" type="file" onchange="readURL(this);" accept="image/"
+						/>
+					  <div class"file-upload-content">
+					  	<img class="file-upload-image" src="# alt="your image" />
+					  	<div class="image-title-wrap">
+					  	</div>
+					   </div>	
+					</div>		
+-->			      		
+     
+	 			</div>
+             
+
+             	<div class="col-md-3 canvas2">
+
+                    <h3>{{display_text}}</h3>
+	 				<!--<canvas  id="myCanvas2" width="500" height="200" style="border:3px solid   grey ">
+
+			      Your browser does not support the HTML5 canvas tag.
+					</canvas>
+				-->
+		
+	 			</div>
+
+	 		</div>
+
+	 		<!--<div class="row buttons_under_canvas1">
+
+	 			
+	 			<div class="col-md-1 ">
+	 				<form action="/">
+			      	<input type="submit" class="btn btn-danger" value = "Clear">
+			      	</form>
+                   
+				
+	 			</div>	
+	 			<div class="col-md-1">
+	 				
+	 			<button id="predBtn" onclick="postImage();" class="btn btn-success">Predict</button>
+
+	 			</div>
+	 		</div>
+	 		-->
+			      
+			</div>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@0.11.2"> </script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+
+
+
+
+//function to capture the content of the canvas and POST it to the server
+function postImage()
+{
+						//statement to capture the content of the canvas as a BASE64 string	
+	               		
+						var inputVal = document.getElementById("textbox").value;
+                        canvas2=document.getElementById("myCanvas2");
+                        ctx2=canvas2.getContext("2d");
+                        //clear the contents of the Answer canvas that is myCanvas2
+                        ctx2.clearRect(0,0,500,250);
+                        console.log("POSTING FUNCTION successfully called");
+
+                        //AJAX for posting the data dynamically
+		            	$.ajax({
+		            	url: '/analyze',
+		            	type: 'POST',
+		            	data: {'text' : inputVal}	
+		            			}).done(function(data,textStatus,jqXHR)
+		            								{
+		            									if(data)
+			            									{   //If the user has written anything
+																//on the canvas
+																ctx2.font="35px Arial"
+																ctx2.stroke()
+
+																ctx2.fillText(data,40,100);
+				            									console.log("Data Received: ",data)
+			            									}
+		            									else
+			            									{	//if the user have not written anything on 
+			            										//the canvas
+			            										ctx2.font="35px Arial"
+																ctx2.stroke()
+																ctx2.fillText("WRITE SOMETHING!",40,100);
+
+			            									}
+
+													}).fail(function (data)
+														{
+															//error message when data is not posted 
+															//succesfully
+															console.log("FAILED!")
+														});
+
+
+
+								
+            		
+
+}
+
+var canvas = document.getElementById("myCanvas2");
+var ctx = canvas.getContext("2d");
+ctx.fillStyle = "white";
+ctx.fillRect(0,0,500,200);
+
+</script>
+</body>
+
+{% endblock %}
